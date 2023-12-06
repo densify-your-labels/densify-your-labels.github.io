@@ -1,0 +1,27 @@
+.row .col.s5ths {
+  width: 20%;
+}
+@media only screen and (min-width: 601px) {
+  .row .col.m5ths {
+    width: 20%;
+  }
+}
+@media only screen and (min-width: 993px) {
+  .row .col.l5ths {
+    width: 20%;
+  }
+}/*# sourceMappingURL=style2.css.map */
+
+.row .col.s4ths {
+  width: 40%;
+}
+@media only screen and (min-width: 601px) {
+  .row .col.m4ths {
+    width: 40%;
+  }
+}
+@media only screen and (min-width: 993px) {
+  .row .col.l4ths {
+    width: 40%;
+  }
+}/*# sourceMappingURL=style2.css.map */

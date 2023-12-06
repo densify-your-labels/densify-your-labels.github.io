@@ -1,0 +1,8 @@
+MIL-Trans	26.2	-
+WYPR	   29.6	   24
+WYPR	    -	-
+MIT	       31.6	26.4
+MIT	        -	-
+ScanNet   	-	30.6
+PN2      	-	 33.9
+Ours 	   38.1	35.1

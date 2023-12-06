@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Densify Your Labels: Unsupervised Clustering with Bipartite Matching
+        for Weakly Supervised Point Cloud Segmentation</title>
+
+    <!-- Compiled and minified CSS -->
+    <link
+        href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css"
+        rel="stylesheet">
+    <link
+        href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css"
+        rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=B612+Mono&family=Open+Sans&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style2.css">
+    <link rel="stylesheet" href="css/additional.css">
+    <link rel="stylesheet" href="css/academicons.min.css" />
+    <link rel="apple-touch-icon" sizes="180x180"
+        href="rest/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32"
+        href="rest/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16"
+        href="rest/favicon-16x16.png">
+    <link rel="manifest" href="rest/site.webmanifest">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col s12">
+                <h1 align="center"> <i class="fa fa-cloud"
+                        aria-hidden="true"></i> Densify Your Labels:
+                    Unsupervised Clustering with Bipartite Matching for Weakly
+                    Supervised Point Cloud Segmentation <i class="fa fa-cloud"
+                        aria-hidden="true"></i> </h1>
+                <h2 align="center"> Supplementary Material </h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s1 center"></div>
+            <div class="col s10 center">
+                Anonymous Authors
+            </div>
+            <div class="col s1 center"></div>
+        </div>
+
+        <div class="row">
+            <div class="col s12 center">
+                <a class="btn-floating grey waves-effect waves-light tooltipped"
+                    data-position="bottom" data-tooltip="Paper"
+                    href="./supplementary.pdf">
+                    <i class="fas fa-file-pdf"></i> Paper
+                </a>
+            </div>
+        </div>
+
+        <hr>
+
+
+        <div>
+            <div class="row">
+                <h2>Abstract</h2>
+                <p>
+                    We propose a weakly supervised semantic segmentation method
+                    for point clouds that predicts "per-point" labels from
+                    just "whole-scene" annotations while achieving the
+                    performance of recent fully supervised approaches.
+                    Our core idea is to propagate the scene-level labels to
+                    each point in the point cloud by creating pseudo labels in
+                    a conservative way.
+                    Specifically, we over-segment point cloud features via
+                    unsupervised clustering and associate scene-level labels
+                    with clusters through bipartite matching, thus propagating
+                    scene labels only to the most relevant clusters, leaving
+                    the rest to be guided solely via unsupervised clustering.
+                    We empirically demonstrate that over-segmentation and
+                    bipartite assignment plays a crucial role.
+                    We evaluate our method on ScanNet and S3DIS datasets,
+                    outperforming state of the art, and demonstrate that we can
+                    achieve results comparable to fully supervised methods.
+                </p>
+            </div>
+        </div>
+        <hr>
+        <div>
+            <h1>Generated point clouds</h1>
+            <div class="col s12">
+                <p>
+                    We present interactive visualizations of point clouds used
+                    in the paper. Use mouse to rotate the point cloud: scroll
+                    to zoom in/zoom-out, Shift+Left Mouse Button to move the
+                    camera, Left Mouse Button to rotate the camera.
+                </p>
+            </div>
+        </div>
+        <div>
+            <div id="combined-container" class="row">
+                <div class="col s12">
+                    <div class="row">
+                        <h2 style="font-variant: small-caps;">
+                            Qualitative Results (Figure 3)
+                        </h2>
+                        <p>
+                            Please notice that our method predicts more
+                            consistent results, both visually and spatially
+                            than CAM [1]. Our bootstrapping method further
+                            improves the perfroamnce of our method.
+                        </p>
+                    </div>
+                    <div>
+                        <div class="row caption">
+                            <div class="col s3 center">
+                                CAM [1]
+                            </div>
+                            <div class="col s3 center ours">
+                                Ours
+                            </div>
+                            <div class="col s3 center ours">
+                                Ours$^*$
+                            </div>
+                            <div class="col s3 center">
+                                Ground Truth
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s3">
+                                <model-viewer alt="CAM row 1"
+                                    shadow-intensity="1" camera-controls
+                                    touch-action="pan-y"
+                                    style="height: 400px; width: 100%"
+                                    min-camera-orbit="-Infinity 0deg auto"
+                                    max-camera-orbit="Infinity 180deg auto"
+                                    auto-rotate tone-mapping="commerce"
+                                    src="./plys/Fig_3/row_1/cam.glb"></model-viewer>
+                            </div>
+                            <div class="col s3">
+                                <model-viewer alt="Ours row 1"
+                                    shadow-intensity="1" camera-controls
+                                    touch-action="pan-y"
+                                    style="height: 400px; width: 100%"
+                                    min-camera-orbit="-Infinity 0deg auto"
+                                    max-camera-orbit="Infinity 180deg auto"
+                                    auto-rotate tone-mapping="commerce"
+                                    cross-origin="anonymous"
+                                    src="./plys/Fig_3/row_1/ours.glb"></model-viewer>
+                            </div>
+                            <div class="col s3">
+                                <model-viewer alt="Ours retrained row 1"
+                                    shadow-intensity="1" camera-controls
+                                    touch-action="pan-y"
+                                    min-camera-orbit="-Infinity 0deg auto"
+                                    max-camera-orbit="Infinity 180deg auto"
+                                    auto-rotate tone-mapping="commerce"
+                                    style="height: 400px; width: 100%"
+                                    cross-origin="anonymous"
+                                    src="./plys/Fig_3/row_1/retraining.glb"></model-viewer>
+                            </div>
+                            <div class="col s3">
+                                <model-viewer alt="Ground truth row 1"
+                                    shadow-intensity="1" camera-controls
+                                    touch-action="pan-y"
+                                    min-camera-orbit="-Infinity 0deg auto"
+                                    max-camera-orbit="Infinity 180deg auto"
+                                    auto-rotate tone-mapping="commerce"
+                                    style="height: 400px; width: 100%"
+                                    cross-origin="anonymous"
+                                    src="./plys/Fig_3/row_1/ground_truth.glb"></model-viewer>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s3">
+                                <model-viewer alt="CAM row 2"
+                                    shadow-intensity="1" camera-controls
+                                    touch-action="pan-y"
+                                    style="height: 250px; width: 100%"
+                                    min-camera-orbit="-Infinity 0deg auto"
+                                    max-camera-orbit="Infinity 180deg auto"
+                                    tone-mapping="commerce"
+                                    src="./plys/Fig_3/row_2/cam.glb"></model-viewer>
+                            </div>
+                            <div class="col s3">
+                                <model-viewer alt="Ours row 2"
+                                    shadow-intensity="1" camera-controls
+                                    touch-action="pan-y"
+                                    style="height: 250px; width: 100%"
+                                    src="./plys/Fig_3/row_2/ours.glb"></model-viewer>
+                            </div>
+                            <div class="col s3">
+                                <model-viewer alt="Ours retrained row 2"
+                                    shadow-intensity="1" camera-controls
+                                    touch-action="pan-y"
+                                    style="height: 250px; width: 100%"
+                                    min-camera-orbit="-Infinity 0deg auto"
+                                    max-camera-orbit="Infinity 180deg auto"
+                                    tone-mapping="commerce"
+                                    src="./plys/Fig_3/row_2/retraining.glb"></model-viewer>
+                            </div>
+                            <div class="col s3">
+                                <model-viewer alt="Ground truth row 2"
+                                    shadow-intensity="1" camera-controls
+                                    touch-action="pan-y"
+                                    style="height: 250px; width: 100%"
+                                    min-camera-orbit="-Infinity 0deg auto"
+                                    max-camera-orbit="Infinity 180deg auto"
+                                    tone-mapping="commerce"
+                                    src="./plys/Fig_3/row_2/groundtruth.glb"></model-viewer>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s3">
+                                <model-viewer alt="CAM row 3"
+                                    shadow-intensity="1" camera-controls
+                                    touch-action="pan-x"
+                                    style="height: 350px; width: 100%"
+                                    tone-mapping="commerce"
+                                    min-camera-orbit="-Infinity 0deg auto"
+                                    max-camera-orbit="Infinity 180deg auto"
+                                    src="./plys/Fig_3/row_3/cam.glb"></model-viewer>
+                            </div>
+                            <div class="col s3">
+                                <model-viewer alt="Ours row 3"
+                                    shadow-intensity="1" camera-controls
+                                    touch-action="pan-y"
+                                    style="height: 350px; width: 100%"
+                                    tone-mapping="commerce"
+                                    min-camera-orbit="-Infinity 0deg auto"
+                                    max-camera-orbit="Infinity 180deg auto"
+                                    src="./plys/Fig_3/row_3/ours.glb"></model-viewer>
+                            </div>
+                            <div class="col s3">
+                                <model-viewer alt="Ours retrained row 3"
+                                    shadow-intensity="1" camera-controls
+                                    touch-action="pan-y"
+                                    style="height: 350px; width: 100%"
+                                    tone-mapping="commerce"
+                                    min-camera-orbit="-Infinity 0deg auto"
+                                    max-camera-orbit="Infinity 180deg auto"
+                                    src="./plys/Fig_3/row_3/retraining.glb"></model-viewer>
+                            </div>
+                            <div class="col s3">
+                                <model-viewer alt="Ground truth row 3"
+                                    shadow-intensity="1" camera-controls
+                                    touch-action="pan-y"
+                                    style="height: 350px; width: 100%"
+                                    tone-mapping="commerce"
+                                    min-camera-orbit="-Infinity 0deg auto"
+                                    max-camera-orbit="Infinity 180deg auto"
+                                    src="./plys/Fig_3/row_3/groundtruth.glb"></model-viewer>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s3">
+                                <model-viewer alt="CAM row 4"
+                                    shadow-intensity="1" camera-controls
+                                    touch-action="pan-x"
+                                    style="height: 320px; width: 100%"
+                                    tone-mapping="commerce"
+                                    min-camera-orbit="-Infinity 0deg auto"
+                                    max-camera-orbit="Infinity 180deg auto"
+                                    src="./plys/Fig_3/row_4/cam.glb"></model-viewer>
+                            </div>
+                            <div class="col s3">
+                                <model-viewer alt="Ours row 4"
+                                    shadow-intensity="1" camera-controls
+                                    touch-action="pan-y"
+                                    style="height: 320px; width: 100%"
+                                    tone-mapping="commerce"
+                                    min-camera-orbit="-Infinity 0deg auto"
+                                    max-camera-orbit="Infinity 180deg auto"
+                                    src="./plys/Fig_3/row_4/ours.glb"></model-viewer>
+                            </div>
+                            <div class="col s3">
+                                <model-viewer alt="Ours retrained row 4"
+                                    shadow-intensity="1" camera-controls
+                                    touch-action="pan-y"
+                                    style="height: 320px; width: 100%"
+                                    tone-mapping="commerce"
+                                    min-camera-orbit="-Infinity 0deg auto"
+                                    max-camera-orbit="Infinity 180deg auto"
+                                    src="./plys/Fig_3/row_4/retraining.glb"></model-viewer>
+                            </div>
+                            <div class="col s3">
+                                <model-viewer alt="Ground truth row 4"
+                                    shadow-intensity="1" camera-controls
+                                    touch-action="pan-y"
+                                    style="height: 320px; width: 100%"
+                                    tone-mapping="commerce"
+                                    min-camera-orbit="-Infinity 0deg auto"
+                                    max-camera-orbit="Infinity 180deg auto"
+                                    src="./plys/Fig_3/row_4/groundtruth.glb"></model-viewer>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s3">
+                                <model-viewer alt="CAM row 5"
+                                    shadow-intensity="1" camera-controls
+                                    touch-action="pan-x"
+                                    style="height: 260px; width: 100%"
+                                    tone-mapping="commerce"
+                                    min-camera-orbit="-Infinity 0deg auto"
+                                    max-camera-orbit="Infinity 180deg auto"
+                                    src="./plys/Extra_Fig_3/e/CAM.glb"></model-viewer>
+                            </div>
+                            <div class="col s3">
+                                <model-viewer alt="Ours row 5"
+                                    shadow-intensity="1" camera-controls
+                                    touch-action="pan-y"
+                                    style="height: 260px; width: 100%"
+                                    tone-mapping="commerce"
+                                    min-camera-orbit="-Infinity 0deg auto"
+                                    max-camera-orbit="Infinity 180deg auto"
+                                    src="./plys/Extra_Fig_3/e/Ours.glb"></model-viewer>
+                            </div>
+                            <div class="col s3">
+                                <model-viewer alt="Ours retrained row 5"
+                                    shadow-intensity="1" camera-controls
+                                    touch-action="pan-y"
+                                    style="height: 260px; width: 100%"
+                                    tone-mapping="commerce"
+                                    min-camera-orbit="-Infinity 0deg auto"
+                                    max-camera-orbit="Infinity 180deg auto"
+                                    src="./plys/Extra_Fig_3/e/Ours_Retrain.glb"></model-viewer>
+                            </div>
+                            <div class="col s3">
+                                <model-viewer alt="Ground truth row 5"
+                                    shadow-intensity="1" camera-controls
+                                    touch-action="pan-y"
+                                    style="height: 260px; width: 100%"
+                                    tone-mapping="commerce"
+                                    min-camera-orbit="-Infinity 0deg auto"
+                                    max-camera-orbit="Infinity 180deg auto"
+                                    src="./plys/Extra_Fig_3/e/GT.glb"></model-viewer>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s3">
+                                <model-viewer alt="CAM row 6"
+                                    shadow-intensity="1" camera-controls
+                                    touch-action="pan-x"
+                                    style="height: 260px; width: 100%"
+                                    tone-mapping="commerce"
+                                    min-camera-orbit="-Infinity 0deg auto"
+                                    max-camera-orbit="Infinity 180deg auto"
+                                    src="./plys/Extra_Fig_3/f/CAM.glb"></model-viewer>
+                            </div>
+                            <div class="col s3">
+                                <model-viewer alt="Ours row 6"
+                                    shadow-intensity="1" camera-controls
+                                    touch-action="pan-y"
+                                    style="height: 260px; width: 100%"
+                                    tone-mapping="commerce"
+                                    min-camera-orbit="-Infinity 0deg auto"
+                                    max-camera-orbit="Infinity 180deg auto"
+                                    src="./plys/Extra_Fig_3/f/Ours.glb"></model-viewer>
+                            </div>
+                            <div class="col s3">
+                                <model-viewer alt="Ours retrained row 6"
+                                    shadow-intensity="1" camera-controls
+                                    touch-action="pan-y"
+                                    style="height: 260px; width: 100%"
+                                    tone-mapping="commerce"
+                                    min-camera-orbit="-Infinity 0deg auto"
+                                    max-camera-orbit="Infinity 180deg auto"
+                                    src="./plys/Extra_Fig_3/f/Ours_Retrain.glb"></model-viewer>
+                            </div>
+                            <div class="col s3">
+                                <model-viewer alt="Ground truth row 6"
+                                    shadow-intensity="1" camera-controls
+                                    touch-action="pan-y"
+                                    style="height: 260px; width: 100%"
+                                    tone-mapping="commerce"
+                                    min-camera-orbit="-Infinity 0deg auto"
+                                    max-camera-orbit="Infinity 180deg auto"
+                                    src="./plys/Extra_Fig_3/f/GT.glb"></model-viewer>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s3">
+                                <model-viewer alt="CAM row 7"
+                                    shadow-intensity="1" camera-controls
+                                    touch-action="pan-x"
+                                    style="height: 260px; width: 100%"
+                                    tone-mapping="commerce"
+                                    min-camera-orbit="-Infinity 0deg auto"
+                                    max-camera-orbit="Infinity 180deg auto"
+                                    src="./plys/Extra_Fig_3/g/CAM.glb"></model-viewer>
+                            </div>
+                            <div class="col s3">
+                                <model-viewer alt="Ours row 7"
+                                    shadow-intensity="1" camera-controls
+                                    touch-action="pan-y"
+                                    style="height: 260px; width: 100%"
+                                    tone-mapping="commerce"
+                                    min-camera-orbit="-Infinity 0deg auto"
+                                    max-camera-orbit="Infinity 180deg auto"
+                                    src="./plys/Extra_Fig_3/g/Ours.glb"></model-viewer>
+                            </div>
+                            <div class="col s3">
+                                <model-viewer alt="Ours retrained row 7"
+                                    shadow-intensity="1" camera-controls
+                                    touch-action="pan-y"
+                                    style="height: 260px; width: 100%"
+                                    tone-mapping="commerce"
+                                    min-camera-orbit="-Infinity 0deg auto"
+                                    max-camera-orbit="Infinity 180deg auto"
+                                    src="./plys/Extra_Fig_3/g/Ours_Retrain.glb"></model-viewer>
+                            </div>
+                            <div class="col s3">
+                                <model-viewer alt="Ground truth row 7"
+                                    shadow-intensity="1" camera-controls
+                                    touch-action="pan-y"
+                                    style="height: 260px; width: 100%"
+                                    tone-mapping="commerce"
+                                    min-camera-orbit="-Infinity 0deg auto"
+                                    max-camera-orbit="Infinity 180deg auto"
+                                    src="./plys/Extra_Fig_3/g/GT.glb"></model-viewer>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s3">
+                                <model-viewer alt="CAM row 8"
+                                    shadow-intensity="1" camera-controls
+                                    touch-action="pan-x"
+                                    style="height: 400px; width: 100%"
+                                    tone-mapping="commerce"
+                                    min-camera-orbit="-Infinity 0deg auto"
+                                    max-camera-orbit="Infinity 180deg auto"
+                                    src="./plys/Extra_Fig_3/h/CAM.glb"></model-viewer>
+                            </div>
+                            <div class="col s3">
+                                <model-viewer alt="Ours row 8"
+                                    shadow-intensity="1" camera-controls
+                                    touch-action="pan-y"
+                                    style="height: 400px; width: 100%"
+                                    tone-mapping="commerce"
+                                    min-camera-orbit="-Infinity 0deg auto"
+                                    max-camera-orbit="Infinity 180deg auto"
+                                    src="./plys/Extra_Fig_3/h/Ours.glb"></model-viewer>
+                            </div>
+                            <div class="col s3">
+                                <model-viewer alt="Ours retrained row 8"
+                                    shadow-intensity="1" camera-controls
+                                    touch-action="pan-y"
+                                    style="height: 400px; width: 100%"
+                                    tone-mapping="commerce"
+                                    min-camera-orbit="-Infinity 0deg auto"
+                                    max-camera-orbit="Infinity 180deg auto"
+                                    src="./plys/Extra_Fig_3/h/Ours_retrain.glb"></model-viewer>
+                            </div>
+                            <div class="col s3">
+                                <model-viewer alt="Ground truth row 8"
+                                    shadow-intensity="1" camera-controls
+                                    touch-action="pan-y"
+                                    style="height: 400px; width: 100%"
+                                    tone-mapping="commerce"
+                                    min-camera-orbit="-Infinity 0deg auto"
+                                    max-camera-orbit="Infinity 180deg auto"
+                                    src="./plys/Extra_Fig_3/h/GT.glb"></model-viewer>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col s12">
+                    <div class="row">
+                        <h2 style="font-variant: small-caps;">
+                            Primitive Matching (Figure 4)
+                        </h2>
+                        <p>
+                            We show that our proposed bipartite matching
+                            performs better than na&iuml;ve matching. Black
+                            colors
+                            denote unmatched primitives or ignored points.
+                        </p>
+                    </div>
+                    <div>
+                        <div class="row caption">
+                            <div class="col s4ths m4ths center">
+                                Na&iuml;ve matching
+                            </div>
+                            <div class="col s4ths m4ths center ours">
+                                Our bipartite matching
+                            </div>
+                            <div class="col s5ths m5ths center">
+                                Ground Truth
+                            </div>
+                        </div>
+                        <div class="row caption">
+                            <div class="col s5ths m5ths center">Primitives
+                            </div>
+                            <div class="col s5ths m5ths center">Matched
+                                Semantics</div>
+                            <div class="col s5ths m5ths center">
+                                Primitives</div>
+                            <div class="col s5ths m5ths center">
+                                Matched Semantics</div>
+                        </div>
+                        <div class="row">
+                            <div class="col s5ths m5ths center">
+                                <model-viewer
+                                    alt="naive matching primitives row 1"
+                                    shadow-intensity="1" camera-controls
+                                    touch-action="pan-y"
+                                    style="height: 200px; width: 100%"
+                                    min-camera-orbit="-Infinity 0deg auto"
+                                    max-camera-orbit="Infinity 180deg auto"
+                                    auto-rotate tone-mapping="commerce"
+                                    src="./plys/Fig_4/row1/naive_primitives.glb"></model-viewer>
+                            </div>
+                            <div class="col s5ths m5ths center">
+                                <model-viewer
+                                    alt="naive matching matched row 1"
+                                    shadow-intensity="1" camera-controls
+                                    touch-action="pan-y"
+                                    style="height: 200px; width: 100%"
+                                    min-camera-orbit="-Infinity 0deg auto"
+                                    max-camera-orbit="Infinity 180deg auto"
+                                    auto-rotate tone-mapping="commerce"
+                                    src="./plys/Fig_4/row1/naive_matched.glb"></model-viewer>
+                            </div>
+                            <div class="col s5ths m5ths center">
+                                <model-viewer
+                                    alt="ours matching primitives row 1"
+                                    shadow-intensity="1" camera-controls
+                                    touch-action="pan-y"
+                                    min-camera-orbit="-Infinity 0deg auto"
+                                    max-camera-orbit="Infinity 180deg auto"
+                                    auto-rotate tone-mapping="commerce"
+                                    style="height: 200px; width: 100%"
+                                    src="./plys/Fig_4/row1/ours_primitive_0471_00.glb"></model-viewer>
+                            </div>
+                            <div class="col s5ths m5ths center">
+                                <model-viewer alt="ours matching matched row 1"
+                                    shadow-intensity="1" camera-controls
+                                    touch-action="pan-y"
+                                    min-camera-orbit="-Infinity 0deg auto"
+                                    max-camera-orbit="Infinity 180deg auto"
+                                    auto-rotate tone-mapping="commerce"
+                                    style="height: 200px; width: 100%"
+                                    src="./plys/Fig_4/row1/ours_matched_0471_00.glb"></model-viewer>
+                            </div>
+                            <div class="col s5ths m5ths center">
+                                <model-viewer alt="gt row 1"
+                                    shadow-intensity="1" camera-controls
+                                    touch-action="pan-y"
+                                    min-camera-orbit="-Infinity 0deg auto"
+                                    max-camera-orbit="Infinity 180deg auto"
+                                    auto-rotate tone-mapping="commerce"
+                                    style="height: 200px; width: 100%"
+                                    src="./plys/Fig_4/row1/GT.glb"></model-viewer>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s5ths m5ths center">
+                                <model-viewer
+                                    alt="naive matching primitives row 2"
+                                    shadow-intensity="1" camera-controls
+                                    touch-action="pan-y"
+                                    style="height: 200px; width: 100%"
+                                    min-camera-orbit="-Infinity 0deg auto"
+                                    max-camera-orbit="Infinity 180deg auto"
+                                    auto-rotate tone-mapping="commerce"
+                                    src="./plys/Fig_4/row2/naive_primitives.glb"></model-viewer>
+                            </div>
+                            <div class="col s5ths m5ths center">
+                                <model-viewer
+                                    alt="naive matching matched row 2"
+                                    shadow-intensity="1" camera-controls
+                                    touch-action="pan-y"
+                                    style="height: 200px; width: 100%"
+                                    min-camera-orbit="-Infinity 0deg auto"
+                                    max-camera-orbit="Infinity 180deg auto"
+                                    auto-rotate tone-mapping="commerce"
+                                    src="./plys/Fig_4/row2/naive_matched.glb"></model-viewer>
+                            </div>
+                            <div class="col s5ths m5ths center">
+                                <model-viewer
+                                    alt="ours matching primitives row 2"
+                                    shadow-intensity="1" camera-controls
+                                    touch-action="pan-y"
+                                    min-camera-orbit="-Infinity 0deg auto"
+                                    max-camera-orbit="Infinity 180deg auto"
+                                    auto-rotate tone-mapping="commerce"
+                                    style="height: 200px; width: 100%"
+                                    src="./plys/Fig_4/row2/orus_primitives_0045_00.glb"></model-viewer>
+                            </div>
+                            <div class="col s5ths m5ths center">
+                                <model-viewer alt="ours matching matched row 2"
+                                    shadow-intensity="1" camera-controls
+                                    touch-action="pan-y"
+                                    min-camera-orbit="-Infinity 0deg auto"
+                                    max-camera-orbit="Infinity 180deg auto"
+                                    auto-rotate tone-mapping="commerce"
+                                    style="height: 200px; width: 100%"
+                                    src="./plys/Fig_4/row2/ours_Matched_0045_00.glb"></model-viewer>
+                            </div>
+                            <div class="col s5ths m5ths center">
+                                <model-viewer alt="gt row 1"
+                                    shadow-intensity="1" camera-controls
+                                    touch-action="pan-y"
+                                    min-camera-orbit="-Infinity 0deg auto"
+                                    max-camera-orbit="Infinity 180deg auto"
+                                    auto-rotate tone-mapping="commerce"
+                                    style="height: 200px; width: 100%"
+                                    src="./plys/Fig_4/row2/GT.glb"></model-viewer>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s5ths m5ths center">
+                                <model-viewer
+                                    alt="naive matching primitives row 3"
+                                    shadow-intensity="1" camera-controls
+                                    touch-action="pan-y"
+                                    style="height: 200px; width: 100%"
+                                    min-camera-orbit="-Infinity 0deg auto"
+                                    max-camera-orbit="Infinity 180deg auto"
+                                    auto-rotate tone-mapping="commerce"
+                                    src="./plys/Fig_4/row3/naive_primitives.glb"></model-viewer>
+                            </div>
+                            <div class="col s5ths m5ths center">
+                                <model-viewer
+                                    alt="naive matching matched row 3"
+                                    shadow-intensity="1" camera-controls
+                                    touch-action="pan-y"
+                                    style="height: 200px; width: 100%"
+                                    min-camera-orbit="-Infinity 0deg auto"
+                                    max-camera-orbit="Infinity 180deg auto"
+                                    auto-rotate tone-mapping="commerce"
+                                    src="./plys/Fig_4/row3/naive_matched.glb"></model-viewer>
+                            </div>
+                            <div class="col s5ths m5ths center">
+                                <model-viewer
+                                    alt="ours matching primitives row 3"
+                                    shadow-intensity="1" camera-controls
+                                    touch-action="pan-y"
+                                    min-camera-orbit="-Infinity 0deg auto"
+                                    max-camera-orbit="Infinity 180deg auto"
+                                    auto-rotate tone-mapping="commerce"
+                                    style="height: 200px; width: 100%"
+                                    src="./plys/Fig_4/row3/ours_primitives.glb"></model-viewer>
+                            </div>
+                            <div class="col s5ths m5ths center">
+                                <model-viewer alt="ours matching matched row 3"
+                                    shadow-intensity="1" camera-controls
+                                    touch-action="pan-y"
+                                    min-camera-orbit="-Infinity 0deg auto"
+                                    max-camera-orbit="Infinity 180deg auto"
+                                    auto-rotate tone-mapping="commerce"
+                                    style="height: 200px; width: 100%"
+                                    src="./plys/Fig_4/row3/ours_primitives.glb"></model-viewer>
+                            </div>
+                            <div class="col s5ths m5ths center">
+                                <model-viewer alt="gt row 3"
+                                    shadow-intensity="1" camera-controls
+                                    touch-action="pan-y"
+                                    min-camera-orbit="-Infinity 0deg auto"
+                                    max-camera-orbit="Infinity 180deg auto"
+                                    auto-rotate tone-mapping="commerce"
+                                    style="height: 200px; width: 100%"
+                                    src="./plys/Fig_4/row3/GT_0675_00.glb"></model-viewer>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div>
+            <div id="combined-container" class="row">
+                <div class="col s12">
+                    <div class="row">
+                        <h2 style="font-variant: small-caps;">
+                            Bibliography
+                        </h2>
+                        <ul style="list-style-type: disc;">
+                            <li>[1] Wei J, Lin G, Yap KH, Hung TY, Xie L.
+                                Multi-Path Region Mining For Weakly Supervised
+                                3D Semantic Segmentation on Point Clouds.
+                                In Proceedings of the IEEE/CVF conference on
+                                computer vision and pattern recognition 2020
+                                (pp. 4384-4393).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script type="module"
+            src="https://unpkg.com/@google/model-viewer/dist/model-viewer.js"></script>
+        <script nomodule
+            src="https://unpkg.com/@google/model-viewer/dist/model-viewer-legacy.js"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+        <!-- JavaScript Bundle with Popper -->
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+            crossorigin="anonymous"></script>
+
+        <script>
+            MathJax = {
+                tex: {
+                    inlineMath: [
+                        ['$', '$'],
+                        ['\\(', '\\)']
+                    ]
+                },
+                svg: {
+                    fontCache: 'global'
+                }
+            };
+        </script>
+        <script type="text/javascript" id="MathJax-script" async
+            src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+            </script>
+        <script src="https://cdn.jsdelivr.net/npm/prismjs/prism.min.js">
+        </script>
+        <!-- Compiled and minified JavaScript -->
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js">
+            </script>
+        <script src="https://kit.fontawesome.com/2f4b26bfb0.js"
+            crossorigin="anonymous"></script>
+
+        <script type="text/javascript">
+            document.addEventListener('DOMContentLoaded', function () {
+                var elems = document.querySelectorAll('.tooltipped');
+                var instances = M.Tooltip.init(elems, options);
+            });
+
+            // Or with jQuery
+
+            $(document).ready(function () {
+                $('.tooltipped').tooltip();
+            });
+        </script>
+
+
+
+</body>
+
+</html>
